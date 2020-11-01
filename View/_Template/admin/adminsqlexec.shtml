@@ -1,0 +1,144 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/admin/css/public.css" media="all">
+    <script src="/static/admin/js/jquery-3.3.1.js" charset="utf-8"></script>
+    <script src='/static/admin/js/jquery.base64.js'></script>
+    <style type="text/css">
+        table.gridtable {
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+        table.gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+        table.gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+        </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库:</label>
+            <div>
+                <select id="dbName">
+                    {{Data['DatabaseSel']}}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否有做修改:</label>
+            <div>
+                <select id="Commit">
+                    <option value="0">没有做修改</option>
+                    <option value="1">有做修改</option>
+                </select>
+            </div>
+        </div>
+        
+        <button type="button" class="layui-btn layui-btn-danger" onclick="ExeclSQL();" id="ExecSQL">执行SQL语句</button>
+        <script>
+            function ExeclSQL(){
+                
+                $.ajax({
+                    "url":"sqlexecCall?db="+$("#dbName").val()+"&sql="+$.base64('encode',$("#SQL").val())+"&commit="+$('#Commit').val(),
+                    "method":"POST",
+                    "success":function(data){
+                        //console.log(data);
+                        data=eval(data);
+                        //mp="<tr><th></th></tr>"
+                        head="";
+                        Tbody=""
+                        for (let index = 0; index < data.length; index++) {
+                            tmm="<tr>"
+                            for(var p in data[index]){
+                                if(index==0){
+                                    head+="<th>"+p+"</th>";
+                                }
+                                tmm+="<td>"+data[index][p]+"</td>";
+                            }
+                            tmm+="<tr>"
+                            Tbody+=tmm;
+                        }
+                        $("#head").html(head);
+                        $("#ShowData").html(Tbody);
+                    }
+
+                });
+               // console.log("Hello")
+            }
+        </script>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">SQL语句</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" id="SQL" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div id="export">
+            <a data-type="json" href="javascript:;">导出json</a>
+            <a data-type="txt" href="javascript:;">导出txt</a>
+            <a data-type="csv" href="javascript:;">导出csv</a>
+            <a data-type="xls" href="javascript:;">导出excel</a>
+            <a data-type="doc" href="javascript:;">导出word</a></div>
+          <script src="/static/admin/js/Blob.js"></script>
+          <script src="/static/admin/js/FileSaver.js"></script>
+          <script src="/static/admin/js/tableExport.js"></script>
+          <script>var $exportLink = document.getElementById('export');
+            $exportLink.addEventListener('click',
+            function(e) {
+              e.preventDefault();
+              if (e.target.nodeName === "A") {
+                tableExport('dbs', '数据库:'+$("#dbName").val()+" 执行语句："+$("#SQL").val(), e.target.getAttribute('data-type'))
+              }
+            },
+            false);</script>
+        <center>
+
+        <table id="dbs" class="gridtable" >
+            <tr id="head">
+                <th>结果输出</th>
+            </tr>
+            <tbody id="ShowData" >
+                
+            </tbody>
+
+            </table></center>
+
+    </div>
+</div>
+<script src="/static/admin/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+            
+
+    });
+</script>
+
+</body>
+</html>

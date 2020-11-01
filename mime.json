@@ -1,0 +1,10 @@
+{
+    ".html":"text/html",
+    ".js":"application/x-javascript",
+    ".css":"text/css",
+    ".jpg":"image/jpeg",
+    ".jpeg":"image/jpeg",
+    ".png":"image/png",
+    ".gif":"image/gif",
+    ".txt":"text/txt"
+}

@@ -1,0 +1,82 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "/static/index.html"
+  },
+  "logoInfo": {
+    "title": "Admin",
+    "image": "/static/admin/images/logo.jpg",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+    "title": "系统配置",
+      "icon": "fa fa-gears",
+      "href": "",
+      "target": "_self",
+      "child":[{
+        "title": "系统配置",
+          "icon": "fa fa-gears",
+          "href": "",
+          "target": "_self"}]
+      },
+      {
+        "title": "服务器配置",
+          "icon": "fa fa-server",
+          "href": "",
+          "target": "_self",
+          "child":[{
+            "title": "服务器配置",
+              "icon": "fa fa-assistive-listening-systems",
+              "href": "svrSetting",
+              "target": "_self"}
+            ]
+     },
+          {
+            "title": "日志历史",
+              "icon": "fa fa-history",
+              "href": "",
+              "target": "_self",
+              "child":[{
+                "title": "日志历史",
+                  "icon": "fa fa-assistive-listening-systems",
+                  "href": "Loglist",
+                  "target": "_self"}]
+              },
+    {
+
+      "title": "数据库管理",
+      "icon": "fa fa-database",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "数据库列表",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child":{{ Data['DBShowList'].replace("'",'"')}}
+
+
+        },
+        {
+
+          "title": "添加数据库",
+          "href": "",
+          "icon": "fa fa-plus",
+          "target": "_self"
+        },
+        {
+
+          "title": "SQL语句执行",
+          "href": "sqlexec",
+          "icon": "fa fa-file-code-o",
+          "target": "_self"
+        }
+      ]
+    }
+    
+    
+  
+  ]
+}
